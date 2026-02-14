@@ -35,4 +35,13 @@ vim.keymap.set("n", "<S-F11>", function()
     require("dap").step_out()
 end, { desc = "Step out" })
 
--- Other debugging keymaps
+-- disable C-f
+vim.api.nvim_set_keymap('n', '<C-f>', '<Nop>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-f>', '<Nop>', { noremap = true, silent = true })
+
+
+
+
+
+
+
