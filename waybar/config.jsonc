@@ -1,102 +1,179 @@
 {
-    "layer": "bottom",
-    "position": "top",
-    "height": 32,
-    "spacing": 2,
-    "exclusive": true,
-    "gtk-layer-shell": true,
-    "passthrough": false,
-    "fixed-center": true,
-    "modules-left": [
-        "hyprland/workspaces",
-        "hyprland/window"
-    ],
-    "modules-center": [
-        "mpris"
-    ],
-    "modules-right": [
-        "cpu",
-        "memory",
-        "pulseaudio",
-        "clock",
-        "clock#simpleclock",
-        "tray",
-        "custom/power"
-    ],
-    "hyprland/workspaces": {
-        "on-click": "activate",
-        "format": "{id}",
-        "persistent-workspaces": {
-            "*": 5
-        }
+  "layer": "top",
+  "height": 42,
+  "margin-top": 0,
+  "margin-left": 0,
+  "margin-bottom": 0,
+  "margin-right": 0,
+  "spacing": 0,
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
+  "modules-center": [
+    "battery",
+    "pulseaudio",
+    "cpu",
+    "custom/arch",
+    "memory",
+    "temperature",
+    "backlight"
+  ],
+  "modules-right": [
+    "mpris",
+    "network",
+    "clock",
+    "clock#simpleclock",
+    "tray"
+  ],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "all-outputs": true,
+    "persistent_workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": [],
+      "10": []
     },
-    "hyprland/window": {
-        "format": "{class}"
-    },
-    "tray": {
-        "show-passive-items": true,
-        "spacing": 10
-    },
-    "clock#simpleclock": {
-        "tooltip": false,
-        "format": " {:%H:%M}"
-    },
-    "clock": {
-        "format": " {:L%a %d %b}",
-        "calendar": {
-            "format": {
-                "days": "<span weight='normal'>{}</span>",
-                "months": "<span color='#cdd6f4'><b>{}</b></span>",
-                "today": "<span color='#f38ba8' weight='700'><u>{}</u></span>",
-                "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
-                "weeks": "<span color='#a6e3a1'><b>W{}</b></span>"
-            },
-            "mode": "month",
-            "mode-mon-col": 1,
-            "on-scroll": 1
-        },
-        "tooltip-format": "<span color='#cdd6f4' font='Lexend 16'><tt><small>{calendar}</small></tt></span>"
-    },
-    "cpu": {
-        "format": " {usage}%",
-        "tooltip": true,
-        "interval": 1
-    },
-    "memory": {
-        "format": " {used:0.1f}Gi"
-    },
-    "mpris": {
-        "format": "{player_icon} {title} - {artist}",
-        "format-paused": "󰏤 <i>{title} - {artist}</i>",
-        "player-icons": {
-            "default": "󰎆",
-            "musicfox": "󰎆" 
-        },
-        "player": "musicfox",
-        "max-length": 40,
-        "on-click": "playerctl -p musicfox play-pause",
-        "on-click-right": "~/.config/hypr/scripts/musicfox.sh"
-    },
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "  muted",
-        "format-icons": {
-            "headphone": "",
-            "default": [
-                " ",
-                " ",
-                " "
-            ]
-        },
-        "on-click": "pavucontrol"
-    },
-    "custom/sep": {
-        "format": "|",
-        "tooltip": false
-    },
-    "custom/power": {
-        "tooltip": false,
-        "on-click": "wlogout -p layer-shell &",
-        "format": "⏻"
+    "format-icons": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "10": "1〇"
     }
+  },
+  "hyprland/window": {
+    "format": "{initialClass}",
+    "icon": true,
+    "icon-size": 16,
+    "max-length": 50
+  },
+  "battery": {
+    "interval": 30,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {icon} {capacity}%",
+    "format-icons": [
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+    "max-length": 25,
+    "tooltip": false
+  },
+  "network": {
+    "interface": "wlo1",
+    "format": "{ifname}",
+    "format-wifi": "<span color='#90cdfa'> </span>{essid}({signalStrength}%)",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "format-disconnected": "<span color='#ff005f'>󰖪 </span>No Network",
+    "on-click": "kitty nmtui"
+  },
+  "cpu": {
+    "interval": 10,
+    "format": " {usage}%",
+    "max-length": 10,
+    "tooltip": true
+  },
+  "custom/arch": {
+    "format": "  ",
+    "on-click": "rofi -show drun"
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {used}GiB",
+    "format-alt": " {used:0.1f}G",
+    "max-length": 10
+  },
+  "temperature": {
+    "thermal-zone": 0,
+    "critical-threshold": 80,
+    "format-critical": " {temperatureC}°C",
+    "format": " {temperatureC}°C"
+  },
+  "backlight": {
+    "device": "amdgpu_b10",
+    "format": "<span color='#d9b172'>{icon}</span> {percent}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "mpris": {
+    "format": "{player_icon} {title} - {artist}",
+    "format-paused": "󰏤 <i>{title} - {artist}</i>",
+    "player-icons": {
+      "default": "󰎆",
+      "musicfox": "󰎆"
+    },
+    "player": "mpd",
+    "max-length": 40,
+    "on-click": "playerctl -p mpd play-pause"
+  },
+  "pulseaudio": {
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "format": "<span color='#f7768e'></span> {volume}%",
+    "format-muted": "<span color='#f7768e'>ﱝ</span>",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "奔",
+        "墳"
+      ]
+    }
+  },
+  "clock#simpleclock": {
+    "tooltip": false,
+    "format": " {:%H:%M}"
+  },
+  "clock": {
+    "format": " {:L%a %d %b}",
+    "calendar": {
+      "format": {
+        "days": "<span weight='normal'>{}</span>",
+        "months": "<span color='#cdd6f4'><b>{}</b></span>",
+        "today": "<span color='#f38ba8' weight='700'><u>{}</u></span>",
+        "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+        "weeks": "<span color='#a6e3a1'><b>W{}</b></span>"
+      },
+      "mode": "month",
+      "mode-mon-col": 1,
+      "on-scroll": 1
+    },
+    "tooltip-format": "<span color='#cdd6f4' font='Lexend 16'><tt><small>{calendar}</small></tt></span>"
+  },
+  "tray": {
+    "icon-size": 20,
+    "show-passive-items": true,
+    "spacing": 8
+  }
 }

@@ -1,130 +1,328 @@
 * {
   min-height: 0;
   min-width: 0;
-  font-family: Lexend, "JetBrainsMono NFP";
+  font-family: Lexend, "JetBrainsMono NFP", monospace;
   font-size: 14px;
   font-weight: 600;
+  border: none;
 }
 
+/* Transparent waybar background */
 window#waybar {
   transition-property: background-color;
   transition-duration: 0.5s;
-  /* background-color: #1e1e2e; */
-  /* background-color: #181825; */
-  background-color: #11111b;
-  /* background-color: rgba(24, 24, 37, 0.6); */
+  background-color: transparent;
+  border-radius: 0;
+}
+
+/* Left Modules */
+
+/* Hyprland Workspaces - Tokyo Night Blue theme */
+#workspaces {
+  margin: 0.4rem 0.25rem;
+  background-color: transparent;
 }
 
 #workspaces button {
   padding: 0.3rem 0.6rem;
-  margin: 0.4rem 0.25rem;
-  border-radius: 6px;
-  /* background-color: #181825; */
-  background-color: #1e1e2e;
-  color: #cdd6f4;
+  margin: 0 0.2rem;
+  border-radius: 8px;
+  background-color: rgba(122, 162, 247, 0.15);
+  color: #7aa2f7;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(122, 162, 247, 0.3);
 }
 
 #workspaces button:hover {
-  color: #1e1e2e;
-  background-color: #cdd6f4;
+  background-color: rgba(122, 162, 247, 0.3);
+  color: #1a1b26;
+  box-shadow: 0 0 8px rgba(122, 162, 247, 0.6);
 }
 
 #workspaces button.active {
-  background-color: #1e1e2e;
-  color: #89b4fa;
+  background-color: rgba(122, 162, 247, 0.4);
+  color: #ffffff;
+  border-color: #7aa2f7;
+  box-shadow: 0 0 8px rgba(122, 162, 247, 0.4);
 }
 
 #workspaces button.urgent {
-  background-color: #1e1e2e;
-  color: #f38ba8;
+  background-color: rgba(247, 118, 142, 0.3);
+  color: #f7768e;
+  border-color: #f7768e;
 }
 
-#cava,
-#clock,
-#pulseaudio,
-#custom-logo,
-#custom-power,
-#custom-spotify,
-#custom-notification,
-#cpu,
-#tray,
-#memory,
-#window,
-#mpris {
-  padding: 0.3rem 0.6rem;
+/* Hyprland Window - Tokyo Night Cyan */
+#window {
+  padding: 0.3rem 0.8rem;
   margin: 0.4rem 0.25rem;
-  border-radius: 6px;
-  /* background-color: #181825; */
-  background-color: #1e1e2e;
-}
-
-#mpris {
-    color: #b4befe;
-}
-
-#mpris.playing {
-  color: #a6e3a1;
-}
-
-#mpris.paused {
-  color: #9399b2;
-}
-
-#mpris:hover {
-  color: #1e1e2e;
-  background-color: #cdd6f4;
-}
-
-#custom-sep {
-  padding: 0px;
-  color: #585b70;
+  border-radius: 8px;
+  background-color: rgba(125, 207, 255, 0.15);
+  color: #7dcfff;
+  border: 1px solid rgba(125, 207, 255, 0.3);
+  font-weight: 500;
 }
 
 window#waybar.empty #window {
   background-color: transparent;
+  border: none;
 }
 
-#cava {
-    color: #ffffff;
+/* Center Modules */
+
+/* Battery - Tokyo Night Green */
+#battery {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(158, 206, 106, 0.15);
+  color: #9ece6a;
+  border: 1px solid rgba(158, 206, 106, 0.3);
 }
 
+#battery.warning {
+  background-color: rgba(224, 175, 104, 0.2);
+  color: #e0af68;
+  border-color: rgba(224, 175, 104, 0.4);
+}
+
+#battery.critical {
+  background-color: rgba(247, 118, 142, 0.2);
+  color: #f7768e;
+  border-color: rgba(247, 118, 142, 0.4);
+  animation: blink 1s linear infinite alternate;
+}
+
+@keyframes blink {
+  to { opacity: 0.5; }
+}
+
+/* Network - Tokyo Night Purple */
+#network {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(187, 154, 247, 0.15);
+  color: #bb9af7;
+  border: 1px solid rgba(187, 154, 247, 0.3);
+}
+
+#network.disconnected {
+  background-color: rgba(247, 118, 142, 0.2);
+  color: #f7768e;
+}
+
+/* CPU - Tokyo Night Cyan */
 #cpu {
-  color: #94e2d5;
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(125, 207, 255, 0.15);
+  color: #7dcfff;
+  border: 1px solid rgba(125, 207, 255, 0.3);
 }
 
+/* Custom Arch Logo - Tokyo Night Blue */
+#custom-arch {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(122, 162, 247, 0.15);
+  color: #7aa2f7;
+  border: 1px solid rgba(122, 162, 247, 0.3);
+  font-size: 16px;
+}
+
+/* Memory - Tokyo Night Purple */
 #memory {
-  color: #cba6f7;
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(187, 154, 247, 0.15);
+  color: #bb9af7;
+  border: 1px solid rgba(187, 154, 247, 0.3);
 }
 
-#clock {
-  color: #74c7ec;
+/* Temperature - Tokyo Night Orange */
+#temperature {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(255, 158, 100, 0.15);
+  color: #ff9e64;
+  border: 1px solid rgba(255, 158, 100, 0.3);
 }
 
-#clock.simpleclock {
-  color: #89b4fa;
+#temperature.critical {
+  background-color: rgba(247, 118, 142, 0.2);
+  color: #f7768e;
+  border-color: rgba(247, 118, 142, 0.4);
 }
 
-#window {
-  color: #cdd6f4;
+/* Backlight - Tokyo Night Yellow */
+#backlight {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(224, 175, 104, 0.15);
+  color: #e0af68;
+  border: 1px solid rgba(224, 175, 104, 0.3);
 }
 
+/* Right Modules */
+
+/* MPRIS - Tokyo Night Green */
+#mpris {
+  padding: 0.3rem 0.8rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(158, 206, 106, 0.15);
+  color: #9ece6a;
+  border: 1px solid rgba(158, 206, 106, 0.3);
+}
+
+#mpris.playing {
+  color: #9ece6a;
+  background-color: rgba(158, 206, 106, 0.2);
+}
+
+#mpris.paused {
+  color: #565f89;
+  background-color: rgba(86, 95, 137, 0.15);
+}
+
+#mpris:hover {
+  background-color: rgba(158, 206, 106, 0.3);
+  box-shadow: 0 0 6px rgba(158, 206, 106, 0.5);
+}
+
+/* PulseAudio - Tokyo Night Pink */
 #pulseaudio {
-  color: #b4befe;
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(247, 118, 142, 0.15);
+  color: #f7768e;
+  border: 1px solid rgba(247, 118, 142, 0.3);
 }
 
 #pulseaudio.muted {
-  color: #a6adc8;
+  background-color: rgba(86, 95, 137, 0.15);
+  color: #565f89;
+  border-color: rgba(86, 95, 137, 0.3);
 }
 
-#custom-logo {
-  color: #89b4fa;
+#pulseaudio:hover {
+  background-color: rgba(247, 118, 142, 0.3);
+  box-shadow: 0 0 6px rgba(247, 118, 142, 0.5);
 }
 
-#custom-power {
-  color: #f38ba8;
+/* Clock - Tokyo Night Blue */
+#clock {
+  padding: 0.3rem 0.8rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(122, 162, 247, 0.15);
+  color: #7aa2f7;
+  border: 1px solid rgba(122, 162, 247, 0.3);
+  font-weight: 600;
 }
 
+/* Simple Clock - Tokyo Night Cyan */
+#clock.simpleclock {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(125, 207, 255, 0.15);
+  color: #7dcfff;
+  border: 1px solid rgba(125, 207, 255, 0.3);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* Tray - Tokyo Night Foreground */
+#tray {
+  padding: 0.3rem 0.6rem;
+  margin: 0.4rem 0.25rem;
+  border-radius: 8px;
+  background-color: rgba(169, 177, 214, 0.1);
+  border: 1px solid rgba(169, 177, 214, 0.3);
+}
+
+#tray > .passive {
+  color: #565f89;
+}
+
+#tray > .active {
+  color: #a9b1d6;
+}
+
+#tray > .needs-attention {
+  color: #f7768e;
+  background-color: rgba(247, 118, 142, 0.2);
+  border-radius: 6px;
+}
+
+/* Global hover effects */
+#battery:hover {
+  background-color: rgba(158, 206, 106, 0.25);
+  box-shadow: 0 0 6px rgba(158, 206, 106, 0.4);
+}
+
+#network:hover {
+  background-color: rgba(187, 154, 247, 0.25);
+  box-shadow: 0 0 6px rgba(187, 154, 247, 0.4);
+}
+
+#cpu:hover {
+  background-color: rgba(125, 207, 255, 0.25);
+  box-shadow: 0 0 6px rgba(125, 207, 255, 0.4);
+}
+
+#custom-arch:hover {
+  background-color: rgba(122, 162, 247, 0.25);
+  box-shadow: 0 0 6px rgba(122, 162, 247, 0.4);
+}
+
+#memory:hover {
+  background-color: rgba(187, 154, 247, 0.25);
+  box-shadow: 0 0 6px rgba(187, 154, 247, 0.4);
+}
+
+#temperature:hover {
+  background-color: rgba(255, 158, 100, 0.25);
+  box-shadow: 0 0 6px rgba(255, 158, 100, 0.4);
+}
+
+#backlight:hover {
+  background-color: rgba(224, 175, 104, 0.25);
+  box-shadow: 0 0 6px rgba(224, 175, 104, 0.4);
+}
+
+#clock:hover {
+  background-color: rgba(122, 162, 247, 0.25);
+  box-shadow: 0 0 6px rgba(122, 162, 247, 0.4);
+}
+
+#clock.simpleclock:hover {
+  background-color: rgba(125, 207, 255, 0.25);
+  box-shadow: 0 0 6px rgba(125, 207, 255, 0.4);
+}
+
+#window:hover {
+  background-color: rgba(125, 207, 255, 0.25);
+  box-shadow: 0 0 6px rgba(125, 207, 255, 0.4);
+}
+
+/* Tooltip styling */
 tooltip {
-  background-color: #181825;
-  border: 2px solid #89b4fa;
+  background-color: rgba(26, 27, 38, 0.95);
+  border: 2px solid #7aa2f7;
+  border-radius: 8px;
+  color: #a9b1d6;
+}
+
+tooltip label {
+  color: #a9b1d6;
+  padding: 0.5rem;
 }

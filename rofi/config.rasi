@@ -9,14 +9,10 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,run,filebrowser,window";
+	modi:                       "drun";
     show-icons:                 true;
-    display-drun:               " Apps";
-    display-run:                " Run";
-    display-filebrowser:        " Files";
-    display-window:             " Windows";
+    display-drun:               " Apps";
 	drun-display-format:        "{name}";
-	window-format:              "{w} · {c} · {t}";
 }
 
 /*****----- Global Properties -----*****/
@@ -90,7 +86,7 @@ mainbox {
     border-radius:               0px 0px 0px 0px;
     border-color:                @border-colour;
     background-color:            transparent;
-    children:                    [ "inputbar", "mode-switcher", "message", "listview" ];
+    children:                    [ "inputbar", "listview" ];
 }
 
 /*****----- Inputbar -----*****/
@@ -104,22 +100,9 @@ inputbar {
     border-color:                @border-colour;
     background-color:            transparent;
     text-color:                  @foreground-colour;
-    children:                    [ "textbox-prompt-colon", "entry" ];
+    children:                    [ "entry" ];
 }
 
-prompt {
-    enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
-}
-textbox-prompt-colon {
-    enabled:                     true;
-    padding:                     5px 0px;
-    expand:                      false;
-    str:                         "";
-    background-color:            inherit;
-    text-color:                  inherit;
-}
 entry {
     enabled:                     true;
     padding:                     5px 0px;
