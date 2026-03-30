@@ -94,42 +94,74 @@ set foldmethod=manual
 " 剪切板设置
 set clipboard=unnamedplus
 
+" true color support
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+" 允许在sava后使用undo
+set undodir=~/.vim/backup
+set undofile
+set undoreload=10000
+
 " }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
 call plug#begin('~/.vim/plugged')
 
-Plug 'preservim/nerdtree'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jiangmiao/auto-pairs', {'do': 'git fetch --depth 1'}
+" highlight
 Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-commentary'
-Plug 'easymotion/vim-easymotion'
+Plug 'vhda/verilog_systemverilog.vim'
+
+" edit
+Plug 'jiangmiao/auto-pairs', {'do': 'git fetch --depth 1'}
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'ryanoasis/vim-devicons'
-Plug 'RRethy/vim-illuminate'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-commentary'
 Plug 'ap/vim-buftabline'
-Plug 'morhetz/gruvbox'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
+Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && npm install'}
+Plug 'editorconfig/editorconfig-vim'
+Plug 'vim-scripts/DoxygenToolkit.vim'
+
+" lsp
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'honza/vim-snippets'
+
+" search
 Plug 'junegunn/fzf.vim'
-Plug 'liuchengxu/vista.vim'
-Plug 'github/copilot.vim'
-Plug 'DanBradbury/copilot-chat.vim'
+Plug 'dhananjaylatkar/vim-gutentags'
+
+" git
+Plug 'tpope/vim-fugitive'
+
+" ui
+Plug 'morhetz/gruvbox'
+" Plug 'joshdick/onedark.vim'
+Plug 'vim-airline/vim-airline' 
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+
+" debug
+Plug 'puremourning/vimspector'
 
 call plug#end()
-
-
 " }}}
 
 " GLOBAL SETTING ---------------------------------------------------------{{{
 
-" buffer 配置
-let g:buftabline_show = 1
-let g:buftabline_number = 2
-let g:buftabline_indicators = 1
+" vimspector
+let g:vimspector_enable_mapping = 'NONE'
 
+" Doxygen
+let g:load_doxygen_syntax = 1
+let g:doxygen_enhanced_color = 1
+let g:doxygen_javadoc_autobrief = 1
+
+" buftabline config
+let g:buftabline_show = 1
+let g:buftabline_numbers = 2
+let g:buftabline_indicators = 1
 
 " theme config
 let g:gruvbox_bold = 1
@@ -137,8 +169,25 @@ let g:gruvbox_italic = 1
 let g:gruvbox_underline = 1
 let g:gruvbox_undercurl = 1
 let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_improved_strings = 0
+let g:gruvbox_imporved_warnings = 1
+let g:gruvbox_transparent_bg = 1
 set background=dark
+
+
 colorscheme gruvbox
+" colorscheme onedark
+let g:airline_theme = 'gruvbox'
+
+" gutentags config
+let g:gutentags_project_root = ['.root', '.git', 'Makefile', 'package.json', 'compile_commands.json']
+let g:gutentags_ctags_tagfile = 'tags'
+
+let g:gutentags_cache_dir = expand('~/.cache/gutentags/')
+if !isdirectory(g:gutentags_cache_dir)
+ silent! call mkdir(g:gutentags_cache_dir, 'p')
+endif
+
 " }}}
 
 " MAPPINGS --------------------------------------------------------------- {{{
@@ -187,6 +236,12 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " 使用 Enter 确认补全
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
+" snippets config
+inoremap <silent><expr> <C-l> coc#pum#visible() ? coc#pum#confirm() : "\<C-l>"
+let g:coc_snippet_next = '<C-l>'
+let g:coc_snippet_prev = '<C-h>'
+
+
 " easymotion
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
@@ -200,6 +255,8 @@ nmap <leader>cr <Plug>(coc-rename)
 nmap <leader>cd <Plug>(coc-diagnostic-info)
 nmap <leader>cf <Plug>(coc-format)
 
+" Doxygen
+nnoremap <leader>cx :Dox<CR>
 
 " Diagnostic
 nmap ]d <Plug>(coc-diagnostic-next)
@@ -207,23 +264,22 @@ nmap [d <Plug>(coc-diagnostic-prev)
 nmap ]e <Plug>(coc-diagnostic-next-error)
 nmap [e <Plug>(coc-diagnostic-prev-error)
 
-
-
 " 配置buffer快捷键
 nnoremap L :bnext<CR>
 nnoremap H :bprevious<CR>
 nnoremap <leader>bd :bd<CR>
 
 " 配置搜索快捷键
-nnoremap <leader>ss :Vista!!<CR>
-nnoremap <leader>sS :Rg<CR>
+nnoremap <leader>ss :BTags<CR>
+nnoremap <leader>sS :Tags<CR>
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fr :History<CR>
-nnoremap <leader>ft :terminal<CR>
 nnoremap <leader>sb :Buffers<CR>
 nnoremap <leader>sc :Commands<CR>
-nnoremap <leader>gg :Git<CR>
 nnoremap <leader>sf :Filetypes<CR>
+
+" Git
+nnoremap <leader>gg :Git<CR>
 
 " 配置分屏
 nnoremap <leader>ww :wincmd w<CR>
@@ -239,12 +295,43 @@ nnoremap <leader>za :foldtoggle<CR>
 
 
 " Copilot 快捷键
-imap <C-Right> <Plug>(copilot-accept-word)
-imap <C-M-Right> <Plug>(copilot-accept-line)
-nmap <leader>aa :CopilotChatToggle<CR>
-nmap <leader>am :CopilotChatModels<CR>
-nmap <leader>af :CopilotChatFocus<CR>
-nmap <leader>an :CopilotChatOpen<CR>
+" imap <C-Right> <Plug>(copilot-accept-word)
+" imap <C-M-Right> <Plug>(copilot-accept-line)
+" nmap <leader>aa :CopilotChatToggle<CR>
+" nmap <leader>am :CopilotChatModels<CR>
+" nmap <leader>af :CopilotChatFocus<CR>
+" nmap <leader>an :CopilotChatOpen<CR>
+
+" 终端快捷键
+nnoremap <C-t> :vert terminal<CR>
+
+" debug
+nmap <leader>dc <Plug>VimspectorContinue
+nmap <leader>dq <Plug>VimspectorStop
+nmap <leader>dr <Plug>VimspectorRestart
+nmap <leader>dp <Plug>VimspectorPause
+nmap <leader>db <Plug>VimspectorToggleBreakpoint
+nmap <leader>dB <Plug>VimspectorToggleConditionalBreakpoint
+nmap <leader>dl <Plug>VimspectorAddFunctionBreakpoint
+nmap <leader>dX :call vimspector#ClearBreakpoints()<CR>
+nmap <leader>do <Plug>VimspectorStepOver
+nmap <leader>di <Plug>VimspectorStepInto
+nmap <leader>dO <Plug>VimspectorStepOut
+nmap <leader>dg <Plug>VimspectorRunToCursor
+nmap <leader>dw <Plug>VimspectorBalloonEval
+nmap <leader>de :call vimspector#Reset()<CR>
+
+
+nmap <F5>   <Plug>VimspectorContinue
+nmap <S-F5> <Plug>VimspectorStop
+nmap <C-S-F5> <Plug>VimspectorRestart
+nmap <F6>   <Plug>VimspectorPause
+nmap <F9>   <Plug>VimspectorToggleBreakpoint
+nmap <S-F9> <Plug>VimspectorToggleConditionalBreakpoint
+nmap <F10>  <Plug>VimspectorStepOver
+nmap <F11>  <Plug>VimspectorStepInto
+nmap <S-F11> <Plug>VimspectorStepOut
+nmap <C-F10> <Plug>VimspectorRunToCursor
 
 " }}}
 
@@ -273,16 +360,28 @@ augroup assembly
   autocmd BufRead,BufNewFile *.S set filetype=asm
 augroup END
 
+" 复制后高亮选中区域
+augroup yank_highlight
+    autocmd!
+    autocmd TextYankPost * silent! call s:HighlightYank()
+augroup END
 
-
-" If Vim version is equal to or greater than 7.3 enable undofile.
-" This allows you to undo changes to a file even after saving it.
-if version >= 703
-    set undodir=~/.vim/backup
-    set undofile
-    set undoreload=10000
-endif
-
+function! s:HighlightYank()
+    if v:event.operator !=# 'y'
+        return
+    endif
+    let [line1, col1] = [v:event.regcontents[0]->len(), 0]
+    let pos = getpos("'[")
+    let end = getpos("']")
+    let m = matchaddpos('IncSearch',
+        \ map(range(pos[1], end[1]), {i, l ->
+        \   l == pos[1] && l == end[1] ? [l, pos[2], end[2] - pos[2] + 1] :
+        \   l == pos[1]                ? [l, pos[2], 9999] :
+        \   l == end[1]                ? [l, 1, end[2]] :
+        \                                [l]
+        \ }), 10)
+    call timer_start(200, {-> matchdelete(m)})
+endfunction
 
 " Display cursorline and cursorcolumn ONLY in active window.
 augroup cursor_off
@@ -290,7 +389,6 @@ augroup cursor_off
     autocmd WinLeave * set nocursorline nocursorcolumn
     autocmd WinEnter * set cursorline cursorcolumn
 augroup END
-
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -301,9 +399,4 @@ if (empty($TMUX))
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   endif
 endif
-
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 " }}}
